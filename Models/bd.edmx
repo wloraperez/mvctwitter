@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BDTwitter.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="BDTwitterStoreContainer">
+          <EntitySet Name="Follows" EntityType="BDTwitter.Store.Follows" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Tweets" EntityType="BDTwitter.Store.Tweets" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="BDTwitter.Store.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Follows_Users" Association="BDTwitter.Store.FK_Follows_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Follows" EntitySet="Follows" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Follows_Users1" Association="BDTwitter.Store.FK_Follows_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Follows" EntitySet="Follows" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tweets_Users" Association="BDTwitter.Store.FK_Tweets_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Tweets" EntitySet="Tweets" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Follows">
+          <Key>
+            <PropertyRef Name="FollowerUserid" />
+            <PropertyRef Name="FollowedUserId" />
+          </Key>
+          <Property Name="FollowerUserid" Type="int" Nullable="false" />
+          <Property Name="FollowedUserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tweets">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Post" Type="nvarchar" Nullable="false" MaxLength="140" />
+          <Property Name="PostDate" Type="datetime" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Follows_Users">
+          <End Role="Users" Type="BDTwitter.Store.Users" Multiplicity="1" />
+          <End Role="Follows" Type="BDTwitter.Store.Follows" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Follows">
+              <PropertyRef Name="FollowerUserid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Follows_Users1">
+          <End Role="Users" Type="BDTwitter.Store.Users" Multiplicity="1" />
+          <End Role="Follows" Type="BDTwitter.Store.Follows" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Follows">
+              <PropertyRef Name="FollowedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tweets_Users">
+          <End Role="Users" Type="BDTwitter.Store.Users" Multiplicity="1" />
+          <End Role="Tweets" Type="BDTwitter.Store.Tweets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tweets">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="get_NotFollowed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getFollowedUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="User" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_deleteFollow" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="follower" Type="int" Mode="In" />
+          <Parameter Name="followed" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spSetFolloweds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="follower" Type="int" Mode="In" />
+          <Parameter Name="folloed" Type="int" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BDTwitter" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="BDTwitterEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tweets" EntityType="BDTwitter.Tweet" />
+          <EntitySet Name="Users" EntityType="BDTwitter.User" />
+          <AssociationSet Name="FK_Tweets_Users" Association="BDTwitter.FK_Tweets_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Tweets" EntitySet="Tweets" />
+          </AssociationSet>
+          <AssociationSet Name="Follows" Association="BDTwitter.Follows">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Users1" EntitySet="Users" />
+          </AssociationSet>
+          <FunctionImport Name="getFollowedUsers" EntitySet="Users" ReturnType="Collection(BDTwitter.User)">
+          <Parameter Name="User" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spSetFolloweds">
+            <Parameter Name="follower" Mode="In" Type="Int32" />
+            <Parameter Name="folloed" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_NotFollowed" EntitySet="Users" ReturnType="Collection(BDTwitter.User)">
+          <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_deleteFollow">
+            <Parameter Name="follower" Mode="In" Type="Int32" />
+            <Parameter Name="followed" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="Tweet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Post" Type="String" Nullable="false" MaxLength="140" Unicode="true" FixedLength="false" />
+          <Property Name="PostDate" Type="DateTime" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="BDTwitter.FK_Tweets_Users" FromRole="Tweets" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Password" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Tweets" Relationship="BDTwitter.FK_Tweets_Users" FromRole="Users" ToRole="Tweets" />
+          <NavigationProperty Name="Followed" Relationship="BDTwitter.Follows" FromRole="Users" ToRole="Users1" />
+          <NavigationProperty Name="Followers" Relationship="BDTwitter.Follows" FromRole="Users1" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_Tweets_Users">
+          <End Role="Users" Type="BDTwitter.User" Multiplicity="1" />
+          <End Role="Tweets" Type="BDTwitter.Tweet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tweets">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Follows">
+          <End Role="Users" Type="BDTwitter.User" Multiplicity="*" />
+          <End Role="Users1" Type="BDTwitter.User" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BDTwitterStoreContainer" CdmEntityContainer="BDTwitterEntities1">
+          <EntitySetMapping Name="Tweets"><EntityTypeMapping TypeName="BDTwitter.Tweet"><MappingFragment StoreEntitySet="Tweets">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="Post" ColumnName="Post" />
+            <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+            <ScalarProperty Name="UserID" ColumnName="UserID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="BDTwitter.User"><MappingFragment StoreEntitySet="Users">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="UserName" ColumnName="UserName" />
+            <ScalarProperty Name="Password" ColumnName="Password" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="Follows" TypeName="BDTwitter.Follows" StoreEntitySet="Follows">
+            <EndProperty Name="Users">
+              <ScalarProperty Name="id" ColumnName="FollowerUserid" />
+            </EndProperty>
+            <EndProperty Name="Users1">
+              <ScalarProperty Name="id" ColumnName="FollowedUserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="getFollowedUsers" FunctionName="BDTwitter.Store.getFollowedUsers" />
+          <FunctionImportMapping FunctionImportName="spSetFolloweds" FunctionName="BDTwitter.Store.spSetFolloweds" />
+          <FunctionImportMapping FunctionImportName="get_NotFollowed" FunctionName="BDTwitter.Store.get_NotFollowed" />
+          <FunctionImportMapping FunctionImportName="sp_deleteFollow" FunctionName="BDTwitter.Store.sp_deleteFollow" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="BD">
+        <EntityTypeShape EntityType="BDTwitter.Tweet" Width="1.5" PointX="3" PointY="1" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDTwitter.User" Width="1.5" PointX="0.75" PointY="0.875" Height="2.1725878906249996" IsExpanded="true" />
+        <AssociationConnector Association="BDTwitter.FK_Tweets_Users" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="1.9901432291666668" />
+          <ConnectorPoint PointX="3" PointY="1.9901432291666668" />
+        </AssociationConnector>
+        <AssociationConnector Association="BDTwitter.Follows" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.2819230769230767" PointY="3.0475878906249996" />
+          <ConnectorPoint PointX="1.2819230769230767" PointY="3.2975878906249996" />
+          <ConnectorPoint PointX="1.7284615384615383" PointY="3.2975878906249996" />
+          <ConnectorPoint PointX="1.7284615384615383" PointY="3.0475878906249996" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

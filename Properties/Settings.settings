@@ -1,0 +1,14 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="mvcTwitter.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="conn" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=a8817ba9-4a11-4313-9247-a058018a147c.sqlserver.sequelizer.com;Initial Catalog=dba8817ba94a1143139247a058018a147c;User ID=irbgqkhdmwiqdrkl;Password=4xLJh3XjZPojwg3XMoQKohX2ziwYBNGLffo7kWgA2Zy7kgSw8Ea48VoUGTj8E7Qk&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=a8817ba9-4a11-4313-9247-a058018a147c.sqlserver.sequelizer.com;Initial Catalog=dba8817ba94a1143139247a058018a147c;User ID=irbgqkhdmwiqdrkl;Password=4xLJh3XjZPojwg3XMoQKohX2ziwYBNGLffo7kWgA2Zy7kgSw8Ea48VoUGTj8E7Qk</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
